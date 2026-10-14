@@ -3,3 +3,4 @@
 ## 목차
 
 - [greenable-7: git stash / git stash pop](greenable-7/notes/git-stash.md)
+- [wow2658: git commit --amend](wow2658/notes/git-commit-amend.md)
