@@ -43,6 +43,42 @@ git commit --amend --no-edit
 원격 저장소(GitHub)에 이미 push된 커밋을 amend하면 커밋 해시가 변경되어 원격과 충돌이 발생한다. 따라서 로컬에만 존재하는 커밋에 사용하는 것이 안전하다.
 
 
+## git stash 및 git stash pop
+
+### 참여자
+
+- greenable-7: stash 실습 및 기록
+
+### 상황
+
+커밋하지 않은 작업을 임시로 보관하고 다른 브랜치로 이동한 뒤, 원래 브랜치에서 작업을 복원했다.
+
+### 실행 명령
+
+```bash
+git stash push -m "greenable stash practice"
+git switch main
+git switch feature/greenable-stash-practice
+git stash pop
+```
+
+### 실제 결과
+
+- stash 전: `stash-demo.txt`가 수정된 상태였다.
+- stash 후: `working tree clean` 상태가 됐다.
+- `git stash list`에서 `greenable stash practice`를 확인했다.
+- `git stash pop` 후 수정 내용이 복원됐다.
+- `Dropped refs/stash@{0}`가 표시됐고 stash 목록이 비었다.
+
+### 선택 이유
+
+완성되지 않은 작업을 커밋하지 않고 잠시 보관한 상태에서 다른 브랜치로 이동하기 위해 사용했다.
+
+### 주의점
+
+`git stash pop`은 복원에 성공하면 stash 목록에서 해당 항목을 제거한다. 보관 기록을 유지하면서 복원하려면 `git stash apply`를 사용할 수 있다.
+
+
 ## git reset --soft HEAD~1 (로컬 커밋 취소 + 변경 유지)
 
 ### 참여자
@@ -95,93 +131,3 @@ Date:   Wed Oct 14 15:55:01 2026 +0900
 ### 선택 이유
 
 그냥 커밋을 한 번 더 해서 누락된 내용을 추가할 수도 있지만, soft reset을 이용해서 각 커밋을 더 완결성 있게 만들면 PR 리뷰를 진행할 때 커밋 단위로 보기 편하고 커밋 히스토리도 간결하게 만들 수 있기 때문에 soft reset을 활용했습니다.
-
-
-## git stash 및 git stash pop
-
-### 참여자
-
-- greenable-7: stash 실습 및 기록
-
-### 상황
-
-커밋하지 않은 작업을 임시로 보관하고 다른 브랜치로 이동한 뒤, 원래 브랜치에서 작업을 복원했다.
-
-### 실행 명령
-
-```bash
-git stash push -m "greenable stash practice"
-git switch main
-git switch feature/greenable-stash-practice
-git stash pop
-```
-
-### 실제 결과
-
-- stash 전: `stash-demo.txt`가 수정된 상태였다.
-- stash 후: `working tree clean` 상태가 됐다.
-- `git stash list`에서 `greenable stash practice`를 확인했다.
-- `git stash pop` 후 수정 내용이 복원됐다.
-- `Dropped refs/stash@{0}`가 표시됐고 stash 목록이 비었다.
-
-### 선택 이유
-
-완성되지 않은 작업을 커밋하지 않고 잠시 보관한 상태에서 다른 브랜치로 이동하기 위해 사용했다.
-
-### 주의점
-
-`git stash pop`은 복원에 성공하면 stash 목록에서 해당 항목을 제거한다. 보관 기록을 유지하면서 복원하려면 `git stash apply`를 사용할 수 있다.
-
-
-## Merge Conflict (협업 브랜치 병합 충돌 해결)
-
-### 참여자
-
-- wow2658: main 브랜치 병합 충돌(Conflict) 해결 및 문서 재배치
-
-### 상황
-
-내 기능 브랜치(`feature/wow2658-amend-practice`)를 원격에 푸시하고 PR을 생성하려 했으나, 그사이 팀원들의 PR이 `main` 브랜치에 먼저 머지되면서 공통 문서(`README.md`, `docs/troubleshooting-log.md`)에서 충돌(`Can't automatically merge`)이 발생했다.
-
-### 충돌 원인
-
-기준 커밋(`969f6ca`) 이후, 원격 `main`과 내 로컬 브랜치 양쪽에서 동일한 파일들의 동일한 라인을 동시에 수정했기 때문에 Git이 자동으로 병합하지 못하고 3-way merge 충돌을 발생시켰다.
-
-### 실행 명령
-
-```bash
-# 1. 원격 최신 변경사항 확인 및 로컬 브랜치로 병합 시도
-git fetch origin
-git merge origin/main
-
-# 2. 충돌 파일 확인
-git status
-
-# 3. 충돌 마커(<<<<<<<, =======, >>>>>>>)를 확인하고 수동 병합 (Manual Merge)
-# - 팀원들의 작업 내용을 모두 보존하면서 이슈 #6 번호 순서에 맞게 문단 재배치
-
-# 4. 해결된 파일 스테이징 및 머지 커밋 생성
-git add README.md docs/troubleshooting-log.md
-git commit -m "Merge remote-tracking branch 'origin/main' into feature/wow2658-amend-practice"
-
-# 5. 원격 브랜치로 푸시
-git push origin feature/wow2658-amend-practice
-```
-
-### 실제 결과 및 증거
-
-- `git merge origin/main` 실행 시 `README.md`와 `docs/troubleshooting-log.md`에서 충돌(`CONFLICT`)이 감지됐다.
-- 수동으로 파일을 열어 충돌 마커를 제거하고 모든 팀원의 내용을 살려 이슈 번호 순서(amend -> reset -> stash)대로 재정렬했다.
-- 머지 커밋(`5bfa4d4`)이 생성되었으며, `git log --graph`를 통해 두 브랜치가 성공적으로 합류한 것을 확인했다.
-- GitHub PR 상태가 `Can't automatically merge`에서 `Able to merge`로 전환됐다.
-
-![04-충돌 발생 감지](../wow2658/images/04-merge-conflict-detected.png)
-![05-충돌 해결 및 머지 그래프](../wow2658/images/05-conflict-resolution-graph.png)
-
-### 선택 이유
-
-한쪽의 코드를 덮어쓰거나 강제 푸시(`--force`)하지 않고, 팀원들의 작업 성과를 온전히 보존하면서 공통 문서를 조화롭게 통합하기 위해 수동 3-way merge 방식을 선택했다.
-
-### 주의점
-
-충돌 마커(`<<<<<<< HEAD`, `=======`, `>>>>>>>`)를 하나라도 남겨두면 문서나 코드에 문법 오류가 발생할 수 있으므로 꼼꼼히 확인하고 제거해야 한다. 또한 내 코드뿐만 아니라 팀원의 코드 맥락도 함께 검토하여 누락되는 내용이 없도록 해야 한다.
