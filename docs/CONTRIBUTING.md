@@ -1,5 +1,19 @@
 # Contributing Guide
 
+## 브랜치 네이밍 규칙
+
+작업 목적을 식별할 수 있도록 다음 형식으로 브랜치 이름을 작성합니다.
+
+feature/<description>
+
+### 예시
+
+- features/branch-naming
+- features/commit-convention
+- features/learning-notes
+
+브랜치 이름은 소문자와 하이폰(-)을 사용합니다.
+
 ## PR 규칙
 - PR 타이틀
   - 의미없는 문구나 내용이 충분히 담기지 않은 제목 금지
