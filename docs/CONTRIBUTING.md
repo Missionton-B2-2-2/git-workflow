@@ -35,3 +35,5 @@
   - `fix`
   - `wip`
   - `edit file`
+    - `docs: update` (변경 대상과 내용이 모호함)
+  - `fix: bug fix` (수정 대상과 결과가 모호함)
