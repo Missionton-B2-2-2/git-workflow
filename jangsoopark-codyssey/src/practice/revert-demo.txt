@@ -1,4 +1,4 @@
 Git Revert Practice
 
-Status: Incorrect version
-Description: This change was pushed by mistake
+Status: Initial version
+Description: Practice reverting a pushed commit.
