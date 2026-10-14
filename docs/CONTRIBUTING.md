@@ -13,3 +13,25 @@
   - main branch에 대한 직접적인 Push 제한
   - PR을 통한 Merge 원칙
   - 리뷰 1명 승인
+
+## 커밋 메시지 규칙
+- 기본 형식: `<type>: <subject>`
+- type 종류
+  - `feat`: 새로운 기능 추가
+  - `fix`: 오류 수정
+  - `docs`: 문서 작성 또는 수정
+  - `refactor`: 기능 변화 없는 코드 구조 개선
+- 작성 원칙
+  - subject에는 변경 대상과 내용을 구체적으로 작성
+  - `update`, `fix`, `temp`, `wip`, `final`처럼 변경 내용을 알 수 없는 메시지 금지
+  - `bug fix`, `edit file`처럼 변경 대상과 효과가 드러나지 않는 메시지 금지
+- 좋은 예시
+  - `feat: add user login validation`
+  - `fix: prevent duplicate note creation`
+  - `docs: add commit message convention`
+  - `refactor: separate note storage logic`
+- 나쁜 예시
+  - `update`
+  - `fix`
+  - `wip`
+  - `edit file`
