@@ -59,3 +59,16 @@ git log -1 --stat
 ## 주의점
 
 이미 원격 저장소(`origin`)에 `push`된 커밋에 대해 `amend`를 수행하면 로컬과 원격의 커밋 히스토리가 달라져 충돌이 발생하거나 강제 푸시(`git push --force`)가 필요하게 된다. 따라서 협업 중인 공유 브랜치에 이미 push된 커밋에는 사용을 지양해야 한다.
+
+---
+
+## 실전 협업 트러블슈팅: Merge Conflict 해결
+
+PR 생성 시 팀원의 선행 머지로 인해 공통 문서(`troubleshooting-log.md`, `README.md`)에서 충돌이 발생했을 때, `git merge origin/main`을 통해 최신 변경사항을 가져와 수동으로 해결했다.
+
+1. **충돌 감지**: `git merge origin/main` 실행 후 CONFLICT 발생
+2. **수동 병합**: 팀원들의 기록을 보존하고 이슈 #6 순서(amend -> reset -> stash)대로 재정렬
+3. **머지 커밋 생성 및 푸시**: 머지 커밋(`5bfa4d4`)을 생성하여 PR 상태를 `Able to merge`로 정상 복구
+
+![04-충돌 감지](../images/04-merge-conflict-detected.png)
+![05-머지 완료 그래프](../images/05-conflict-resolution-graph.png)
