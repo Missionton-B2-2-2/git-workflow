@@ -9,4 +9,4 @@
 
 ----
 Closes #
-~(or Part of #)~
+<!-- or `Part of #` if the PR partially solves the issue -->
