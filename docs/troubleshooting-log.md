@@ -27,8 +27,32 @@ git commit --amend --no-edit
 ### 실제 결과
 
 - `git commit --amend` 실행 후 최근 커밋 메시지가 `docs: add amend demo text`로 수정됐다.
-- 새로운 커밋이 쌓이지 않고 직전 커밋의 해시(Hash)가 갱신되면서 덮어씌워졌다.
+- amend는 직전 커밋과 같은 부모를 가진 새 커밋을 만들어 직전 커밋을 대체했다.
 - `git log -1`을 통해 커밋 메시지와 변경 사항이 정상 반영된 것을 확인했다.
+
+`git reflog`로 확인한 amend 전후의 실제 커밋 해시는 다음과 같다.
+
+| 단계 | 커밋 해시 | 커밋 메시지 | 변경 내용 |
+| --- | --- | --- | --- |
+| 최초 커밋 | `344b67a` | `docs: add amend demo textt` | 메시지에 `textt` 오타가 있는 실습 커밋 생성 |
+| 메시지 수정 후 | `362872a` | `docs: add amend demo text` | `git commit --amend -m`으로 메시지만 수정 |
+| 누락된 내용 추가 후 | `976f377` | `docs: add amend demo text` | `git commit --amend --no-edit`으로 메시지는 유지하고 파일 내용 추가 |
+
+해시는 `344b67a → 362872a → 976f377` 순서로 바뀌었다. 세 커밋의 부모는 모두 `969f6ca`로 동일하므로, 각각 직전 커밋 다음에 추가된 것이 아니라 같은 위치의 커밋을 대체한 것을 확인했다. 대체 전 커밋도 로컬 reflog에서 확인할 수 있었다.
+
+실습에 해당하는 reflog 기록만 조회한 명령:
+
+```bash
+git reflog show feature/wow2658-amend-practice --format="%h %gs" --grep-reflog="amend demo"
+```
+
+실제 출력은 최근 기록부터 표시된다.
+
+```text
+976f377 commit (amend): docs: add amend demo text
+362872a commit (amend): docs: add amend demo text
+344b67a commit: docs: add amend demo textt
+```
 
 ![01-초기 커밋](../wow2658/images/01-initial-commit-typo.png)
 ![02-메시지 수정](../wow2658/images/02-amend-commit-message.png)
