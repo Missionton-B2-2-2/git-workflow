@@ -10,8 +10,8 @@ git reset 커맨드의 hard, soft 옵션을 이해하고 적절하게 활용한�
 
 ## 핵심 개념
 
-- `git reset`: 스테이징된 변경사항을 unstaged 상태로 되롤린다.
-- `git reset --hard`: 커밋되지 않은 변경사항을 삭제한다.
+- `git reset`: 스테이징된 변경사항을 unstaged 상태로 되돌린다. 
+- `git reset --hard`: Git이 추적하는 작업 내용과 스테이징 상태를 대상 커밋으로 되돌린다. 단, untracked 파일까지 삭제하지는 않는다.
 - `git reset --hard HEAD~1`: 커밋을 취소하면서 변경사항을 삭제한다.
 - `git reset --soft HEAD~1`: 커밋을 취소하면서 변경사항을 유지한다.
 
@@ -34,4 +34,5 @@ git reset 커맨드의 여러가지 옵션을 사용해서 다양한 기능을 �
 
 ## 주의점
 
-reset hard 옵션으로 삭제된 내용은 복구하기 어렵기 때문에 조심해서 사용해야 한다.
+- reset hard 옵션으로 삭제된 내용은 복구하기 어렵기 때문에 조심해서 사용해야 한다.
+- reset --hard/--soft HEAD~1 커맨드는 이미 원격 레포지토리에 올라간 커밋에는 사용을 지양해야 한다.
