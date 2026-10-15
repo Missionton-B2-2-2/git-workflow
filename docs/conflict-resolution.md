@@ -147,7 +147,79 @@ Git은 충돌이 난 부분을 다음과 같이 충돌 마커로 감싸서 표�
 
 ---
 
-## 충돌 기록 2 (팀원 작성 예정)
+## 충돌 기록 2 (비자명 충돌: 동일 파일 동일 위치 수정)
+
+### 참여자
+- **해결 주체 (PR 작성자)**: @jangsoopark-codyssey
+- **충돌 대상 커밋 작성자**: @wow2658
+
+### 상황 (What happened)
+- **관련 브랜치**: `feature/jangsoopark-revert-practice` (PR#24)
+- **발생 배경**: 
+   - Git Revert 실습 기록을 작성하던 중, 다른 팀원의 Git Amend 실습 기록이 main에 먼저 병합됨
+   - 최신 main을 병합하기 위해 git merge origin/main을 실행하였으나, 두 브랜치가 문서 상단의 동일한 위치에 서로 다른 내용을 추가하여 Content Conflict가 발생함
+
+### 충돌 내용 (Conflict markers)
+- 충돌 파일: `docs/troubleshooting-log.md`
+- 충돌 유형: 동일 파일의 동일 위치에 서로 다른 실습 기록을 추가하여 발생한 Content Conflict
+
+```plaintext
+<<<<<<< HEAD
+## Git Revert — 원격에 Push된 Commit 취소
+...
+=======
+## git commit --amend
+...
+>>>>>>> origin/main
+```
+
+- HEAD: @jangsoopark-codyssey의 Git Revert 실습 기록
+- origin/main: @wow2658의 Git Amend 실습 기록
+- 두 브랜치가 문서 제목 바로 아래 동일한 위치에 내용을 추가하여 Git이 자동으로 병합하지 못함
+
+### 해결 과정 (How)
+1. 최신 main을 병합하고 git status로 충돌 파일 확인
+```bash
+git fetch origin
+git merge origin/main
+git status
+```
+
+2. docs/troubleshooting-log.md에서 충돌 마커를 확인하고 Manual Resolution (Keep Both) 방식으로 수동 병합함
+   - <<<<<<< HEAD, =======, >>>>>>> origin/main 제거
+   - Git Revert와 Git Amend 기록 모두 유지
+   - 기존 Git Stash 및 Git Reset 기록도 보존
+
+3. 충돌 마커 제거 및 문서 검증
+```bash
+grep -n -E '^(<<<<<<<|=======|>>>>>>>)' docs/troubleshooting-log.md
+grep -n '^## ' docs/troubleshooting-log.md
+git diff --check
+```
+
+4. 충돌 해결 파일을 Staging하고 Merge Commit 생성 후 Push
+```bash
+git add docs/troubleshooting-log.md
+git commit -m "docs: 트러블 슈팅 로그 충돌 해결"
+git push origin feature/jangsoopark-revert-practice
+```
+
+### 결과 (Outcome)
+```bash
+git log -1 --oneline feature/jangsoopark-revert-practice
+0ddcb9f (origin/feature/jangsoopark-revert-practice, feature/jangsoopark-revert-practice) docs: 트러블 슈팅 로그 충돌 해결
+```
+- Content Conflict를 수동으로 해결하고 PR #24에 반영함
+- Git Revert, Amend, Stash, Reset의 네 가지 실습 기록을 모두 보존함
+- Conflict Marker가 제거되었으며 git diff --check에서 오류가 발생하지 않음을 확인함
+- 기존 Commit History를 유지하면서 최신 main의 변경 사항을 병합함
+
+### 배운 점 (Learnings)
+- 서로 다른 브랜치에서 동일 파일의 동일 위치를 수정하면 Content Conflict가 발생할 수 있음
+- 충돌 해결 시 한쪽 변경 사항을 선택하기보다 양쪽 작업의 목적을 확인하고 보존하는 것이 중요함
+- 공통 문서를 수정할 때 최신 main을 확인하고 팀원 간 작업 범위를 조율하면 충돌 발생 가능성을 줄일 수 있음
+
+## 충돌 기록 3 (팀원 작성 예정)
 
 > [!NOTE]  
 > 본 영역은 과제 필수 요구사항(팀 전체 충돌 해결 실습 최소 2회)에 따라 다음 충돌 실습을 진행하는 팀원이 작성할 수 있도록 마련된 템플릿입니다.
