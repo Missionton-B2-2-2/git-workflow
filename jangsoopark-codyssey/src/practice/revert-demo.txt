@@ -1,0 +1,4 @@
+Git Revert Practice
+
+Status: Initial version
+Description: Practice reverting a pushed commit.
