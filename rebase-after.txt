@@ -1,0 +1,4 @@
+a510ed6 docs: 제출 인덱스 및 협업 증빙 정리
+f8725f4 Merge pull request #26 from Missionton-B2-2-2/feature/jangsoopark-conflict-resolution
+d1cf60b docs: 두번째 충돌 해결 사례 추가
+4eaf60c Merge pull request #24 from Missionton-B2-2-2/feature/jangsoopark-revert-practice
