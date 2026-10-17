@@ -275,8 +275,8 @@ git merge origin/main
 ### 결과 (Outcome)
 - 충돌 파일을 수동 수정하고 `git add README.md`까지 진행함.
 - 기존 학습 노트 목록과 GitHub Flow 선택 이유를 함께 반영하도록 통합함.
-- **후속 검증 필요**: Merge Commit Hash, 원격 Push 및 PR #21의 충돌 해소 상태를 확인한 뒤 이 항목에 결과를 추가할 것.
-- **관련 증빙**: [PR #21](https://github.com/Missionton-B2-2-2/git-workflow/pull/21), [Issue #13](https://github.com/Missionton-B2-2-2/git-workflow/issues/13)
+- Merge Commit `b4bebda`를 생성하고 원격 브랜치에 Push하여 PR #21의 충돌을 해결함.
+- **관련 증빙**: [PR #21](https://github.com/Missionton-B2-2-2/git-workflow/pull/21), [Issue #13](https://github.com/Missionton-B2-2-2/git-workflow/issues/13), [Merge Commit b4bebda](https://github.com/Missionton-B2-2-2/git-workflow/commit/b4bebda)
 
 ### 배운 점 (Learnings)
 - 공동 문서의 동일 hunk를 수정하면 서로 다른 목적의 작업이라도 Content Conflict가 발생할 수 있음.

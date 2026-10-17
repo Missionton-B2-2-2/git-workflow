@@ -259,10 +259,11 @@ git merge origin/main
 5. `git add README.md`로 충돌 해결 내용을 Staging하고, 해결 내역은 `docs/conflict-resolution.md`의 충돌 기록 3에 분리하여 기록함.
 
 ### 결과
-- 기존 작성자의 원격 브랜치와 Commit `c752367`을 유지한 채 후속 작업을 진행함.
-- 기존 Issue #13과 PR #21의 연결 관계를 유지하여 작업 이력을 이어갈 수 있도록 함.
-- `README.md`의 충돌 내용에 대한 수동 수정 및 Staging을 진행함.
-- **후속 검증 필요**: Merge Commit 생성, `git push origin feature/why-gitflow-doc`, PR #21 Review 및 Merge 결과를 확인한 후 기록할 것.
+- 기존 작성자의 원격 브랜치와 Commit `c752367`을 유지한 채 후속 작업을 완료함.
+- 기존 Issue #13과 PR #21의 연결 관계를 유지하여 작업 이력을 보존함.
+- `README.md`의 충돌 내용을 수동으로 수정하고 Staging을 완료함.
+- Merge Commit `b4bebda`를 생성하고 `git push origin feature/why-gitflow-doc`을 통해 원격 브랜치에 반영하여 PR #21의 충돌을 해결함.
+- PR #21의 Review 의견을 반영하여 GitHub Flow 설명 및 작업 인계 기록을 보완함.
 
 ### 왜 이 방법을 선택하였는가?
 - 기존 Feature Branch를 이어받으면 이전 담당자의 Commit과 PR 논의가 그대로 보존됨.
