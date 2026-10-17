@@ -13,7 +13,7 @@
 
 ### @jangsoopark-codyssey
 
-- **해결 기여 Issue:** [#2 브랜치 네이밍](https://github.com/Missionton-B2-2-2/git-workflow/issues/2), [#8 리뷰 규칙](https://github.com/Missionton-B2-2-2/git-workflow/issues/8), [#11 CODEOWNERS](https://github.com/Missionton-B2-2-2/git-workflow/issues/11), [#6 Troubleshooting](https://github.com/Missionton-B2-2-2/git-workflow/issues/6), [#5 충돌 해결](https://github.com/Missionton-B2-2-2/git-workflow/issues/5)
+- **해결 기여 Issue:** [#3 제출 인덱스](https://github.com/Missionton-B2-2-2/git-workflow/issues/3), [#2 브랜치 네이밍](https://github.com/Missionton-B2-2-2/git-workflow/issues/2), [#8 리뷰 규칙](https://github.com/Missionton-B2-2-2/git-workflow/issues/8), [#11 CODEOWNERS](https://github.com/Missionton-B2-2-2/git-workflow/issues/11), [#6 Troubleshooting](https://github.com/Missionton-B2-2-2/git-workflow/issues/6), [#5 충돌 해결](https://github.com/Missionton-B2-2-2/git-workflow/issues/5)
 - **PR:** [#16 브랜치 네이밍](https://github.com/Missionton-B2-2-2/git-workflow/pull/16), [#20 리뷰 규칙](https://github.com/Missionton-B2-2-2/git-workflow/pull/20), [#23 CODEOWNERS](https://github.com/Missionton-B2-2-2/git-workflow/pull/23), [#24 git revert](https://github.com/Missionton-B2-2-2/git-workflow/pull/24), [#26 충돌 해결 기록](https://github.com/Missionton-B2-2-2/git-workflow/pull/26)
 - **타인 PR Review:** [#14](https://github.com/Missionton-B2-2-2/git-workflow/pull/14), [#22](https://github.com/Missionton-B2-2-2/git-workflow/pull/22), [#25](https://github.com/Missionton-B2-2-2/git-workflow/pull/25)
 - **Review 반영:** [PR #16](https://github.com/Missionton-B2-2-2/git-workflow/pull/16) — 브랜치 형식 및 문서 표현 수정 ([Commit 70b1ad3](https://github.com/Missionton-B2-2-2/git-workflow/commit/70b1ad3))
@@ -85,19 +85,123 @@
 
 ## 7. Bonus Tasks
 
-- **CODEOWNERS:** [PR #23](https://github.com/Missionton-B2-2-2/git-workflow/pull/23), [.github/CODEOWNERS](.github/CODEOWNERS)
-- **Git History 관리:** [GitHub Commits](https://github.com/Missionton-B2-2-2/git-workflow/commits/main/)
+### 7.1. Interactive Rebase
+
+- **실습자:** @jangsoopark-codyssey
+- **브랜치:** `feature/submission-index`
+- **실습 명령:** `git rebase -i HEAD~3` (`squash`)
+- **Rebase 이전 Commit:** `730590c`, `046952a`, `cace3ba` (3개)
+- **Rebase 이후 Commit:** `a510ed6` (1개, 통합 메시지 반영)
+- **실습 기록 문서화 Commit:** `1645912`
+- **실습 기록 및 전후 History 비교:** [docs/rebase-history.md](docs/rebase-history.md)
+
+### 7.2. CODEOWNERS
+
+- **작업 PR:** [#23](https://github.com/Missionton-B2-2-2/git-workflow/pull/23)
+- **설정 파일:** [.github/CODEOWNERS](.github/CODEOWNERS)
+- **관련 Issue:** [#11](https://github.com/Missionton-B2-2-2/git-workflow/issues/11)
+- **설정 Commit:** [`c9d98ef`](https://github.com/Missionton-B2-2-2/git-workflow/commit/c9d98ef), [`ce3cde3`](https://github.com/Missionton-B2-2-2/git-workflow/commit/ce3cde3)
 
 ## 8. Git History Evidence
 
-저장소 전체 브랜치 및 병합 이력은 다음 명령으로 확인할 수 있다.
+Git History는 **필수 제출 증빙**이며, 보너스 과제와 구분한다. 전체 브랜치와 Merge History는 다음 명령으로 수집하였다.
 
 ```bash
 git fetch --all
 git log --oneline --graph --all
 ```
 
-증빙 수집 스크립트: [scripts/submission-evidence.sh](scripts/submission-evidence.sh)
+다음은 `feature/submission-index`에서 수집한 실제 Git History 텍스트이다. `1645912`와 `a510ed6`은 해당 시점 로컬 Feature Branch의 Commit이다.
+
+```text
+* 1645912 (HEAD -> feature/submission-index) docs: Interactive Rebase 실습 결과 문서화
+* a510ed6 docs: 제출 인덱스 및 협업 증빙 정리
+| * 7e358d5 (origin/feature/why-gitflow-doc, feature/why-gitflow-doc) GitHub Flow 설명 수정
+| *   b4bebda Merge origin/main into feature/why-gitflow-doc
+| |\
+| |/
+|/|
+* |   f8725f4 (origin/main, origin/HEAD, main) Merge pull request #26 from Missionton-B2-2-2/feature/jangsoopark-conflict-resolution
+|\ \
+| * | d1cf60b (origin/feature/jangsoopark-conflict-resolution, feature/jangsoopark-conflict-resolution) docs: 두번째 충돌 해결 사례 추가
+|/ /
+* |   4eaf60c Merge pull request #24 from Missionton-B2-2-2/feature/jangsoopark-revert-practice
+|\ \
+| * \   0ddcb9f (origin/feature/jangsoopark-revert-practice, feature/jangsoopark-revert-practice) docs: 트러블 슈팅 로그 충돌 해결
+| |\ \
+| |/ /
+|/| |
+* | |   a5fada2 Merge pull request #23 from Missionton-B2-2-2/feature/codeowners
+|\ \ \
+| * | | ce3cde3 (origin/feature/codeowners, feature/codeowners) docs: 팀 노트 업데이트에 따른 CODEOWNER 리뷰어 추가
+| * | | c9d98ef docs: CODEOWNERS 설정 파일 추가
+* | | |   61adf97 Merge pull request #25 from Missionton-B2-2-2/feature/wow2658-conflict-resolution
+|\ \ \ \
+| * | | | 5efa011 (origin/feature/wow2658-conflict-resolution) docs: define conflict resolution workflow and record non-trivial conflict case 1
+| * | | | fc9925e (origin/feature/code-review-convention, feature/code-review-convention) docs: 코드 리뷰 규칙 정의
+| |/ / /
+* | | |   9c7bf60 Merge pull request #22 from Missionton-B2-2-2/feature/wow2658-amend-practice
+|\ \ \ \
+| |/ / /
+|/| | |
+| * | | 3819c2a (origin/feature/wow2658-amend-practice) docs: record amend commit hashes and reflog evidence
+| * | | 3187b58 docs: adjust troubleshooting log order and keep scope to commit amend
+| * | | 9ef87ab docs: add merge conflict troubleshooting record and evidence screenshots
+| * | |   5bfa4d4 Merge remote-tracking branch 'origin/main' into feature/wow2658-amend-practice
+| |\ \ \
+| |/ / /
+|/| | |
+| * | | 45d6526 docs: add git commit --amend learning note, images, and troubleshooting record
+| * | | 976f377 docs: add amend demo text
+| | | * 01279b6 docs: git revert 트러블슈팅 실습 기록 추가
+| | | * a8c5308 docs: git revert 학습 노트 및 실습 증빙 추가
+| | | * da7e3b8 Revert "docs: git revert 실험을 위하여 의도적으로 절못된 콘텐츠 추가"
+| | | * 29c8b21 docs: git revert 실험을 위하여 의도적으로 절못된 콘텐츠 추가
+| | | * 7d4f8b9 docs: git revert 실험용 파일 추가
+| | |/
+| |/|
+* | |   f75dcbd Merge pull request #16 from Missionton-B2-2-2/feature/branch-naming
+|\ \ \
+| * | | 70b1ad3 (origin/feature/branch-naming, feature/branch-naming) docs: 브랜치 네이밍 규칙에 리뷰 의견 반영
+| * | | f2a32f6 docs: 브랜치 네이밍 규칙 정의
+* | | |   8378acc Merge pull request #19 from Missionton-B2-2-2/feature/git-reset-study-note
+|\ \ \ \
+| * | | | eb06980 (origin/feature/git-reset-study-note) fix: 피드백에 따라 git reset 학습 노트의 오타 수정 및 내용 보강
+| * | | | 0194203 docs: git soft reset 활용 학습노트 작성
+| | | |/
+| | |/|
+* | | |   259db27 Merge pull request #18 from Missionton-B2-2-2/docs/greenable-commit-message-rules
+|\ \ \ \
+| |/ / /
+|/| | |
+| * | | 5e76770 (origin/docs/greenable-commit-message-rules) docs: add unclear commit message examples
+| * | | 0656b5c docs: add commit message convention
+|/ / /
+| | * c752367 doc: gitflow를 선택하여 프로젝트를 진행하는 이유에 대한 설명 추가
+| |/
+|/|
+* |   969f6ca Merge pull request #15 from Missionton-B2-2-2/feature/greenable-stash-practice
+|\ \
+| |/
+|/|
+| * ccd9a10 (origin/feature/greenable-stash-practice) docs: reorganize greenable-7 learning files
+| * caa5752 docs: add git stash learning note
+| * 1f34364 docs: record stash and pop practice
+| * 345a21e docs: add stash practice seed
+* |   ae5c54b Merge pull request #14 from Missionton-B2-2-2/feature/pr-template
+|\ \
+| |/
+|/|
+| * b8cb98c (origin/feature/pr-template) fix: PR 규칙 문서 피드백에 따라 업데이트
+| * 854fe31 docs: pull_request_template.md에 PR 규칙 내용 반영
+| * 1af5650 docs: CONTRIBUTING.md에 PR 규칙 작성
+|/
+* a350878 docs: README.md 작성
+```
+
+- **GitHub Commit History:** [main 브랜치 Commit 목록](https://github.com/Missionton-B2-2-2/git-workflow/commits/main/)
+- **증빙 수집 스크립트:** [scripts/submission-evidence.sh](scripts/submission-evidence.sh)
+- **Rebase History 비교:** [docs/rebase-history.md](docs/rebase-history.md)
 
 ## 9. Submission Summary
 
@@ -106,8 +210,3 @@ git log --oneline --graph --all
 - 동일 hunk 충돌을 포함한 충돌 해결 과정을 문서화하였다.
 - Git Troubleshooting 4종을 팀원별로 분담하여 실습하고 기록하였다.
 - 협업 규칙과 파일별 리뷰어 설정을 Repository에 문서화하였다.
-
-## Submission Verification
-
-본 제출 문서는 팀원별 Issue, PR, Review 및 협업 실습 결과를 정리한다.  
-협업 기록은 GitHub의 Issue, Pull Request 및 Git History를 통해 확인할 수 있다.
