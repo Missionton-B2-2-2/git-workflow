@@ -224,3 +224,61 @@ Date:   Wed Oct 14 15:55:01 2026 +0900
 
 그냥 커밋을 한 번 더 해서 누락된 내용을 추가할 수도 있지만, soft reset을 이용해서 각 커밋을 더 완결성 있게 만들면 PR 리뷰를 진행할 때 커밋 단위로 보기 편하고 커밋 히스토리도 간결하게 만들 수 있기 때문에 soft reset을 활용했습니다.
 
+## 기존 담당자 작업 중단에 따른 Feature Branch 및 PR 인계
+
+### 참여자
+- @hyojun-edu: 기존 작업 및 PR #21 생성
+- @jangsoopark-codyssey: 후속 작업 인계 및 Merge Conflict 해결
+
+### 상황
+- Issue #13은 GitHub Flow를 선택한 이유를 `README.md` 또는 `docs/CONTRIBUTING.md`에 3줄 이내로 기록하는 작업임.
+- 기존 담당자가 개인 사정으로 작업을 지속하기 어려워져 PR #21이 미완료 상태로 남음.
+- PR #21의 작업 브랜치 `feature/why-gitflow-doc`은 원격에 보존되어 있었으며, 최신 `main`과 `README.md` 충돌이 발생한 상태였음.
+- 새 PR을 생성하거나 기존 커밋을 재작성하는 대신, 다른 팀원이 기존 브랜치에서 작업을 계속하기로 결정함.
+
+### 시도한 명령 및 절차
+1. 원격 Feature Branch를 로컬에서 Checkout하고 Tracking 상태 및 기존 Commit을 확인함.
+
+```bash
+git branch -vv
+git log -5 --oneline
+# feature/why-gitflow-doc: c752367
+```
+
+2. Working Tree가 깨끗한 상태임을 확인한 후 최신 `main`을 병합함.
+
+```bash
+git status
+git fetch origin
+git merge origin/main
+# CONFLICT (content): Merge conflict in README.md
+```
+
+3. `git status`와 `git diff -- README.md`로 충돌을 확인한 뒤, VS Code에서 기존 작업자의 설명과 `main`의 학습 노트 목차를 통합함.
+4. README의 `Gitflow` 표현과 선택 이유를 과제에서 사용하는 `GitHub Flow`에 맞게 수정함.
+5. `git add README.md`로 충돌 해결 내용을 Staging하고, 해결 내역은 `docs/conflict-resolution.md`의 충돌 기록 3에 분리하여 기록함.
+
+### 결과
+- 기존 작성자의 원격 브랜치와 Commit `c752367`을 유지한 채 후속 작업을 완료함.
+- 기존 Issue #13과 PR #21의 연결 관계를 유지하여 작업 이력을 보존함.
+- `README.md`의 충돌 내용을 수동으로 수정하고 Staging을 완료함.
+- Merge Commit `b4bebda`를 생성하고 `git push origin feature/why-gitflow-doc`을 통해 원격 브랜치에 반영하여 PR #21의 충돌을 해결함.
+- PR #21의 Review 의견을 반영하여 GitHub Flow 설명 및 작업 인계 기록을 보완함.
+
+### 왜 이 방법을 선택하였는가?
+- 기존 Feature Branch를 이어받으면 이전 담당자의 Commit과 PR 논의가 그대로 보존됨.
+- 별도의 PR을 생성하는 것보다 기존 작업의 목적, 검토 과정 및 변경 이력을 추적하기 쉬움.
+- 최신 `main`을 병합하는 방식은 공유된 기존 Commit History를 재작성하지 않으므로 협업 중 안전성이 높음.
+
+### 주의사항
+- 동일 브랜치에 Push하기 전에 원격 Write 권한과 다른 팀원의 동시 작업 여부를 확인해야 함.
+- 공유 브랜치에 무단 Force Push 또는 History Rewriting을 수행하지 않음.
+- 기존 PR 작성자와 후속 작업자의 기여를 구분하고, PR 코멘트에 인계 사실을 남기는 것이 바람직함.
+- 작업 인계 사유는 개인정보를 공개하지 않는 범위에서 기록함.
+- 이 사례는 과제의 Git 명령어 Troubleshooting 4종과 별개의 실제 협업 대응 사례임.
+
+### 증빙
+- [Issue #13](https://github.com/Missionton-B2-2-2/git-workflow/issues/13)
+- [PR #21](https://github.com/Missionton-B2-2-2/git-workflow/pull/21)
+- [충돌 해결 기록 3](conflict-resolution.md)
+

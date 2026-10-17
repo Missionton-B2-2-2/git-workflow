@@ -219,30 +219,66 @@ git log -1 --oneline feature/jangsoopark-revert-practice
 - 충돌 해결 시 한쪽 변경 사항을 선택하기보다 양쪽 작업의 목적을 확인하고 보존하는 것이 중요함
 - 공통 문서를 수정할 때 최신 main을 확인하고 팀원 간 작업 범위를 조율하면 충돌 발생 가능성을 줄일 수 있음
 
-## 충돌 기록 3 (팀원 작성 예정)
-
-> [!NOTE]  
-> 본 영역은 과제 필수 요구사항(팀 전체 충돌 해결 실습 최소 2회)에 따라 다음 충돌 실습을 진행하는 팀원이 작성할 수 있도록 마련된 템플릿입니다.
+## 충돌 기록 3 (비자명 충돌: README.md 동일 hunk 수정 및 작업 인계)
 
 ### 참여자
-- **해결 주체 (PR 작성자)**: 
-- **충돌 대상 커밋 작성자**: 
+- **기존 PR 작성자**: @hyojun-edu
+- **충돌 해결 및 후속 작업 담당자**: @jangsoopark-codyssey
+- **관련 Issue / PR**: Issue #13 / PR #21
+- **관련 브랜치**: `feature/why-gitflow-doc` → `main`
 
 ### 상황 (What happened)
-- **관련 브랜치**: 
-- **발생 배경**: 
+- 기존 작성자가 `feature/why-gitflow-doc`에서 GitHub Flow 선택 이유를 `README.md`에 추가하고 PR #21을 생성함.
+- 이후 다른 팀원들의 학습 노트 목차가 `main`에 반영되면서, 두 브랜치가 `README.md`의 동일 인접 구간(hunk)을 서로 다르게 수정한 상태가 됨.
+- 기존 담당자의 작업 중단으로 @jangsoopark-codyssey가 기존 PR과 브랜치를 인계함.
+- 기존 브랜치에서 최신 `origin/main`을 병합하자 자동 병합에 실패함.
+
+```bash
+git fetch origin
+git merge origin/main
+# Auto-merging README.md
+# CONFLICT (content): Merge conflict in README.md
+# Automatic merge failed; fix conflicts and then commit the result.
+```
 
 ### 충돌 내용 (Conflict markers)
-- 충돌이 발생한 파일 및 충돌 마커 코드 블록 작성
+- **충돌 파일**: `README.md`
+- **충돌 유형**: 동일 hunk의 Content Conflict (비자명 충돌)
+
+```text
+<<<<<<< HEAD
+## 학습노트 목차
+- [greenable-7: git stash / git stash pop](greenable-7/notes/git-stash.md)
+
+## Gitflow 선택 이유
+- 명확한 브랜치 역할 분리: ...
+- 대규모 및 분산 팀 협업 적합성: ...
+- 체계적인 버전 및 릴리스 관리: ...
+=======
+- [wow2658: git commit --amend](wow2658/notes/git-commit-amend.md)
+- [greenable-7: git stash / git stash pop](greenable-7/notes/git-stash.md)
+- [hyojun-edu: git reset](hyojun-edu/notes/git-reset.md)
+>>>>>>> origin/main
+```
+
+- `HEAD`: 기존 작업자의 학습 노트 목차 일부와 Gitflow 선택 이유
+- `origin/main`: 여러 팀원의 학습 노트 목차
+- 양측에서 같은 위치의 Markdown 구간을 수정하여 Git이 자동 병합하지 못함.
 
 ### 해결 과정 (How)
-1. 
-2. 
-3. 
+1. 기존 PR의 원격 Feature Branch를 인계하고 기존 Commit `c752367`과 `main`의 변경 사항을 확인함.
+2. `git fetch origin`, `git merge origin/main`으로 충돌을 재현하고 `git status`, `git diff -- README.md`로 충돌 파일과 내용을 확인함.
+3. VS Code에서 Manual Resolution (Keep Both)을 적용하여 중복 항목은 제거하고 기존 작업자의 설명과 최신 `main`의 학습 노트 링크를 함께 보존함.
+4. 팀이 실제 적용하는 전략에 맞춰 `Gitflow`를 `GitHub Flow`로 정정하고 선택 이유를 `main` 및 `feature/*` 중심의 PR 협업 과정에 맞게 수정함.
+5. 수정된 `README.md`를 저장하고 `git add README.md`로 해당 파일의 충돌 해결을 Staging함.
 
 ### 결과 (Outcome)
-- 
+- 충돌 파일을 수동 수정하고 `git add README.md`까지 진행함.
+- 기존 학습 노트 목록과 GitHub Flow 선택 이유를 함께 반영하도록 통합함.
+- Merge Commit `b4bebda`를 생성하고 원격 브랜치에 Push하여 PR #21의 충돌을 해결함.
+- **관련 증빙**: [PR #21](https://github.com/Missionton-B2-2-2/git-workflow/pull/21), [Issue #13](https://github.com/Missionton-B2-2-2/git-workflow/issues/13), [Merge Commit b4bebda](https://github.com/Missionton-B2-2-2/git-workflow/commit/b4bebda)
 
 ### 배운 점 (Learnings)
-- 
-
+- 공동 문서의 동일 hunk를 수정하면 서로 다른 목적의 작업이라도 Content Conflict가 발생할 수 있음.
+- 다른 팀원의 작업을 인계할 때 기존 Feature Branch와 PR을 유지하면 원래 작성자의 Commit 및 논의 이력을 보존할 수 있음.
+- 충돌 해결 시 변경 내용을 모두 보존하는 것뿐 아니라 설명의 기술적 정확성도 검토해야 함.
